@@ -6,6 +6,8 @@
     <title>{% block titulo %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet"/>
 </head>
+{% block estilo %}
+{% endblock %}
 <body>
 <main class="container-fluid">
     <nav>
@@ -14,11 +16,15 @@
         </ul>
         <ul>
             <li><a href="#">Sobre</a></li>
-            <li><a href="{% url 'listcategorias' %}">Produtos</a></li>
+            <li><a href="{% url 'listallprod' %}">Produtos</a></li>
         </ul>
     </nav>
     {% block conteudo %}
     {% endblock %}
 </main>
 </body>
+{% block script %}
+{% endblock %}
+
+
 </html>

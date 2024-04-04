@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block conteudo %}
+	<article class="">
+        <img src="{% if produto.imagem %} {{produto.imagem.url}}
+                            {% else %} {% static 'imagens/notfound.jfif' %}
+                            {% endif %}" alt="imagem de {{ produto.nome }}">
+
+
+         <textarea readonly rows="6">{{ produto.descricao }}</textarea>
+
+
+        <a href="#" role="button" class="outline">Adicionar ao Carrinho</a>
+
+    </article>
+{% endblock %}

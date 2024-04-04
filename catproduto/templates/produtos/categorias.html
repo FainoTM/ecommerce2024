@@ -1,17 +1,70 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block titulo %}Meu Ecommerce - Categorias {% endblock %}
 
+{% block estilo %}
+{% endblock %}
+
 {% block conteudo %}
-<article>
-    {% for c in categorias %}
-    <a href="{% url 'listarprodutos' c.slug %}" role="button" class="outline">
-        {{ c.nome }}
-    </a>
-    {% empty %}
-    <a href="{% url 'home' %}" role="button" class="outline">
-        Voltar
-    </a>
-    {% endfor %}
-</article>
+    <article>
+        {% for c in categorias %}
+            <a href="{% url 'listcategorias' c.slug %}" role="button" class="outline {% if  categoria and forloop.first %}ativo{% endif %}">
+                {{ c.nome }}
+            </a>
+        {% endfor %}
+    </article>
+    <article data-theme="light">
+        <h2>
+            Produtos - Categoria
+            {% if categoria %}
+                {{ categoria.nome }}
+            {% else %}
+                Geral
+            {% endif %}
+        </h2>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Imagem</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in produtos %}
+                    <tr>
+                        <td>
+                            <img src="{% if p.imagem %} {{p.imagem.url}}
+                            {% else %} {% static 'imagens/notfound.jfif' %}
+                            {% endif %}" alt="imagem de {{ p.nome }}">
+                        </td>
+                        <td><a href="{% url 'detalheproduto' p.slug %}">{{ p.nome }}</a></td>
+                        <td>{{ p.preco }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </article>
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function() {
+        var elementos = $(".outline");
+        elementos.on("click", function(event) {
+            event.preventDefault();
+            if ($(this).hasClass("ativo")) {
+                //console.log($(this).attr('class'));
+                window.location.href = "{% url 'listallprod' %}";
+            } else {
+                console.log($(this).attr('class'));
+                window.location.href = $(this).attr('href');
+            }
+
+           // $(".outline").removeClass("ativo");
+            $(this).toggleClass("ativo");
+        });
+    });
+</script>
 {% endblock %}
